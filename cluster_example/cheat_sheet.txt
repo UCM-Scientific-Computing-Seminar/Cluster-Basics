@@ -1,0 +1,62 @@
+This is a cheat sheet to common cluster commands!
+
+vi - This is used to view Vim files. You should know this if your reading this in the terminal!
+
+i - when you want to edit a file on the cluster before you can insert text you need to press i. This will allow you to start editing. When your finished and want to exit editing mode, press escape
+
+:wq - to save a file that you just finished editing
+
+:q - to stop viewing a file you haven't edited
+
+:q! - to stop viewing a file you have edited but you don't want the edits saved
+
+:noh - if you accidentally highlight text you can turn the highlight off with this command
+
+cd - This is used to change directories. If you want to move up you use .. , to go up multiple directories ../../.. ,  if you want to move into a directory begin to type the name and press tab. If you want to move back to your home directory press type cd with nothing else
+
+cp - This will copy a file or directory! If I wanted to copy hello.py I would use the command: cp hello.py hello2.py. If you wanted to copy a directory you need to use the -avr command: cp HELLO HELLO2 -avr
+
+scp - This command copies between the cluster and your desktop and vice versa. To copy from cluster to desktop use command: scp -r  USERNAME3@merced.ucmerced.edu:/home/mreeves3/cluster_example ./Desktop/ but with your username. If you want to copy something from your desktop to the cluster just switch the order (and use your log in info)
+
+ls - This will list all the files in the directory you are currently in.
+
+pwd - This will print the working directory.
+
+sbatch - This command is used to run jobs! You just need to type this command and then the name of your SLURM script
+
+squeue -u <USERNAME> - This is used to check your jobs in the queue. For example I would type squeue -u mreeves3
+
+squeue -p <QUEUE> - This command is used to check all the jobs on a particular queue, for example: squeue -p fast.q
+
+scancel - This is used to cancel a job, just type this command and the job number.
+
+sinfo - This shows you the status of all of the nodes on the cluster
+
+ON CONDA ENVIROMENTS
+
+sometimes you need certain libraries installed for python code, you can install them using enviroments!
+
+The first thing you need to do is access conda: module load anaconda3
+Then you create an enviroment: conda creat --name test_env
+To activate environment: source activate test_env
+Now you can pip install any packages you might need!
+To deacticate: conda deactivate
+
+Now you can load environments when running your code!!
+
+
+EXAMPLE OF SLURM
+
+#!/bin/bash
+#$ -S /bin/bash
+#$ -cwd
+#$ -N hello
+#$ -j y
+#SBATCH --partition  fast.q
+#SBATCH --output=./output.out
+#SBATCH --error=./error.err
+#SBATCH --time=3:59:59
+
+module load anaconda3
+source activate test_env
+python hello.py
